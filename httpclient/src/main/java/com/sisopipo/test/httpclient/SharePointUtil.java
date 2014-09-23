@@ -36,6 +36,8 @@ import org.apache.http.util.EntityUtils;
  */
 
 /**
+ * use HttpClient 4.3.5
+ * 
  * @author Geln Yang
  * @version 1.0
  */
@@ -45,10 +47,10 @@ public class SharePointUtil implements Serializable {
 	private static final Log logger = LogFactory.getLog(SharePointUtil.class);
 
 	public final static void main(String[] args) throws Exception {
-		String domain = "COMWAVE";
+		String domain = "DOMAIN";
 		String user = "xxx";
 		String pwd = "xxx";
-		String fileUrl = "http://192.168.13.31/Shared%20Documents/FirstBank/Fund%20System/readme.txt";
+		String fileUrl = "http://192.168.13.31/Shared%20Documents/readme.txt";
 		String saveFilePath = "d:/readme.txt";
 		downloadFile(domain, user, pwd, fileUrl, saveFilePath);
 		System.out.println("========================over");
@@ -110,9 +112,9 @@ public class SharePointUtil implements Serializable {
 				logger.info("write content to file:" + tempFile);
 				FileOutputStream fileOutputStream = new FileOutputStream(tempFile);
 				InputStream is = entity.getContent();
-				byte[] bytes = new byte[4096];
-				while (is.read(bytes) != -1) {
-					fileOutputStream.write(bytes);
+				int c;
+				while ((c = is.read()) != -1) {
+					fileOutputStream.write(c);
 				}
 				fileOutputStream.close();
 				checkFileExists(saveTargetFile);
@@ -144,12 +146,14 @@ public class SharePointUtil implements Serializable {
 		}
 
 		/* still exists */
-		if (file.exists())
+		if (file.exists()) {
 			try {
 				logger.warn("delete file:" + saveTargetFile);
 				FileUtils.forceDelete(file);
 			} catch (IOException e) {
+				logger.warn(e.getMessage());
 			}
+		}
 	}
 
 }
