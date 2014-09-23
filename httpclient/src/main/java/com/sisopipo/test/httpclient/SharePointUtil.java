@@ -46,21 +46,7 @@ public class SharePointUtil implements Serializable {
 
 	private static final Log logger = LogFactory.getLog(SharePointUtil.class);
 
-	public final static void main(String[] args) throws Exception {
-		String domain = "DOMAIN";
-		String user = "xxx";
-		String pwd = "xxx";
-		String fileUrl = "http://192.168.13.31/Shared%20Documents/readme.txt";
-		String saveFilePath = "d:/readme.txt";
-		downloadFile(domain, user, pwd, fileUrl, saveFilePath);
-		System.out.println("========================over");
-	}
-
-	public static int downloadFile(String domain, String userName, String userPass, String fileUrl, String saveTargetFile) throws Exception {
-		return ntlmAuthDownload(domain, userName, userPass, fileUrl, saveTargetFile);
-	}
-
-	private final static int ntlmAuthDownload(String domain, String user, String pwd, String fileUrl, String saveTargetFile) throws Exception {
+	public final static int ntlmAuthDownload(String domain, String user, String pwd, String fileUrl, String saveTargetFile) throws Exception {
 		logger.info("download sharepoint file:" + fileUrl);
 		URL url = new URL(fileUrl);
 		int port = url.getPort();
